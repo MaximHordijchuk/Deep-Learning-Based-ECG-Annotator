@@ -32,18 +32,18 @@ def get_ecg_data(datfile):
 	os.chdir(recordpath) ## somehow it only works if you chdir. 
 
 	annotator='q1c'
-	annotation = wfdb.rdann(recordname, extension=annotator, sampfrom=0,sampto = None, pbdir=None)
+	annotation = wfdb.rdann(recordname, extension=annotator, sampfrom=0,sampto = None, pb_dir=None)
 	Lstannot=list(zip(annotation.sample,annotation.symbol,annotation.aux_note))
 
 	FirstLstannot=min( i[0] for i in Lstannot)
 	LastLstannot=max( i[0] for i in Lstannot)-1
 	print("first-last annotation:", FirstLstannot,LastLstannot)
 	
-	record = wfdb.rdsamp(recordname, sampfrom=FirstLstannot,sampto = LastLstannot) #wfdb.showanncodes()
+	signals, _fields = wfdb.rdsamp(recordname, sampfrom=FirstLstannot,sampto = LastLstannot) #wfdb.showanncodes()
 	annotation = wfdb.rdann(recordname, annotator, sampfrom=FirstLstannot,sampto = LastLstannot) ## get annotation between first and last. 
-	annotation2 = wfdb.Annotation(recordname='sel32', extension='niek', sample=(annotation.sample-FirstLstannot), symbol = annotation.symbol, aux_note=annotation.aux_note)
+	annotation2 = wfdb.Annotation(record_name='sel32', extension='niek', sample=(annotation.sample-FirstLstannot), symbol = annotation.symbol, aux_note=annotation.aux_note)
 
-	Vctrecord=np.transpose(record.p_signals)
+	Vctrecord=np.transpose(signals)
 	VctAnnotationHot=np.zeros( (6,len(Vctrecord[1])), dtype=np.int)
 	VctAnnotationHot[5]=1 ## inverse of the others 
 	#print("ecg, 2 lead of shape" , Vctrecord.shape) 
@@ -277,7 +277,7 @@ exclude.update(["sel35","sel36","sel37","sel50","sel102","sel104","sel221","sel2
 
 # load data
 datfiles=glob.glob(qtdbpath+"*.dat")
-xxt,yyt=LoaddDatFiles(datfiles[ :round(len(datfiles)*perct) ]) # training data. 
+xxt,yyt=LoaddDatFiles(datfiles[ :round(len(datfiles)*perct) ]) # training data.
 xxt,yyt=unison_shuffled_copies(xxt,yyt) ### shuffle
 xxv,yyv=LoaddDatFiles(datfiles[ -round(len(datfiles)*percv): ] ) ## validation data.
 seqlength=xxt.shape[1]

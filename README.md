@@ -22,6 +22,9 @@ model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accurac
 ## Getting Started
 - Download ECG data using something like <code>wget -r -l1 --no-parent https://physionet.org/physiobank/database/qtdb/</code>
 - Run, with as the first argument the directory where the ECG data is stored; or set <code>qtdbpath</code>.
+```bash
+$ ./ecg_annotation.py ./qtdb/
+```
 
 ## Output
 A 2 lead ECG, the colors indicate P-Pend(yellow),Pend-Q(green), Q-R(red),R-S(purple),S-Tend(brown),Tend-P(pink). Training took about an hour on 6 cores. 
