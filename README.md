@@ -27,7 +27,14 @@ $ ./ecg_annotation.py ./qtdb/
 ```
 
 ## Output
-A 2 lead ECG, the colors indicate P-Pend(yellow),Pend-Q(green), Q-R(red),R-S(purple),S-Tend(brown),Tend-P(pink). Training took about an hour on 6 cores. 
+
+### Files description
+Two files: model.h5 – trained model, ecg.pdf – result plots.
+I've included model_sample.h5 and ecg_sample.pdf as my results.
+To use my trained model just rename model_sample.h5 to model.h5.
+
+### Plots description
+A 2 lead ECG, the colors indicate P-Pend(yellow),Pend-Q(green), Q-R(red),R-S(purple),S-Tend(brown),Tend-P(pink). Training took about an hour on 6 cores.
 ![example output](https://github.com/niekverw/Deep-Learning-Based-ECG-Annotator/blob/master/images/example.png?raw=true)
 - Colors at the top show true annotations
 - Colors at the bottom show predicted annotations
